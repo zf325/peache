@@ -2,10 +2,9 @@ import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from '../interfaces/user.interface';
 
-
-let userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     account: { type: String, unique: true, required: true },
-    email: { type:String },
+    email: { type: String },
     cellPhone: { type: String },
     password: { type: String, required: true },
     nickname: { type: String },
@@ -16,25 +15,29 @@ let userSchema = new mongoose.Schema({
 
 });
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
     // document.save() will excute this middleware
     // not use arrow function
     // need to cover this(type: document) into user document
     // we need to define an document contain all fields in schema
-    let user: UserDocument = <UserDocument>this;
+    const user: UserDocument = this as UserDocument;
     const now = new Date();
     user.createdAt = user.createdAt || now,
     user.updatedAt = now;
-    if (!user.isModified('password')) return next();
-    bcrypt.hash(user.password, 12, (err, encodePass) => {
-        if (err) return next(err);
-        user.password = encodePass;
-        next();
-    });
+    if (!user.isModified('password')) {
+        return next();
+    } else {
+        return bcrypt.hash(user.password, 12, (err, encodePass) => {
+            if (err) {
+                return next(err);
+            } else {
+                user.password = encodePass;
+                return next();
+            }
+        });
+    }
 });
 
 userSchema.index({ account: 1 });
 
 export default userSchema;
-
-

@@ -27,7 +27,7 @@ export interface IReqParamCreateUser {
     readonly password: string;
     readonly email?: string;
     readonly cellPhone?: string;
-    readonly nickname?: String;
+    readonly nickname?: string;
     readonly avatar?: string;
     readonly role: string;
 }

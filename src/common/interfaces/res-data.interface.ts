@@ -1,6 +1,5 @@
 export default interface IResData {
-    errCode: number ;
-    errInfo?: string,
+    errCode: number;
+    errInfo?: string;
     result: object;
 }
-
