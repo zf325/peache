@@ -39,5 +39,7 @@ userSchema.pre('save', function(next) {
 });
 
 userSchema.index({ account: 1 });
+userSchema.index({ email: 1 });
+userSchema.index({ mobile: 1 });
 
 export default userSchema;

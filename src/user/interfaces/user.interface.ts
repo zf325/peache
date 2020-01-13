@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-export interface UserModel {
+export interface UserNoPass {
     readonly account: string;
     readonly email?: string;
     readonly cellPhone?: string;
